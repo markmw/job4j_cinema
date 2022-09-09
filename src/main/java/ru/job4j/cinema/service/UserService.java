@@ -3,9 +3,9 @@ package ru.job4j.cinema.service;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.cinema.model.User;
-import ru.job4j.cinema.persistence.UserDbStore;
+import ru.job4j.cinema.repository.UserDbStore;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service @ThreadSafe
@@ -17,10 +17,18 @@ public class UserService {
     }
 
     public Optional<User> add(User user) {
-        return store.add(user);
+        return store.addUser(user);
     }
 
-    public Collection<User> findAll() {
+    public Optional<User> findById(int id) {
+        return store.findById(id);
+    }
+
+    public boolean update(User user) {
+        return store.updateUser(user);
+    }
+
+    public List<User> findAll() {
         return store.findAll();
     }
 

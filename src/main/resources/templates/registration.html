@@ -14,14 +14,18 @@
             <div class="card" style="width: 30rem;">
                 <div class="card-header" style="height: 3rem">
                     <div style="margin-top: 1%">
-                        <span>Авторизация</span>
+                        <span>Регистрация</span>
                         <span  style="float: right">
                         <a th:href="@{/index}">Вернуться на главную</a>
                     </span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" th:action="@{/login}">
+                    <form method="POST" th:action="@{/registration}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                        </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email:</label>
                             <input type="email" class="form-control" id="email" name="email">
@@ -30,7 +34,7 @@
                             <label for="phone" class="form-label">Номер телефона:</label>
                             <input type="tel" class="form-control" id="phone" name="phone">
                         </div>
-                        <button type="submit" class="btn btn-primary">Войти</button>
+                        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                         <div th:if="${fail}">
                             <div class="alert alert-danger" role="alert" th:text="${message}">
                             </div>

@@ -6,66 +6,60 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller @ThreadSafe
 public class UserController {
-    private final UserService store;
+    private final UserService userService;
 
     public UserController(UserService store) {
-        this.store = store;
+        this.userService = store;
     }
 
-    @GetMapping("/formAddUser")
-    public String formAddUser() {
-        return "addUser";
+    @GetMapping("/registrationForm")
+    public String registrationForm() {
+        return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute User user) {
-        Optional<User> regUser = store.add(user);
+    public String registration(@ModelAttribute User user, Model model) {
+        Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
-            return "redirect:fail";
+            model.addAttribute("fail", true);
+            model.addAttribute("message", "Пользователь с такой почтой или номером телефона уже существует!");
+            return "registration";
         }
-        return "redirect:success";
-    }
-
-    @GetMapping("/fail")
-    public String failRegUser() {
-        return "fail";
-    }
-
-    @GetMapping("/success")
-    public String successRegUser() {
-        return "success";
+        return "login";
     }
 
     @GetMapping("/loginPage")
-    public String loginPage(Model model, @RequestParam(name = "fail", required = false) Boolean fail) {
-        model.addAttribute("fail", fail != null);
+    public String loginPage(Model model, HttpSession httpSession) {
+        if (httpSession.getAttribute("mustLoginForTakeTicket") != null) {
+            model.addAttribute("fail", true);
+            model.addAttribute("message", "Для приобретения билета необходимо войти в свою учетную запись!");
+        }
         return "login";
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user, HttpServletRequest req) {
-        Optional<User> userDb = store.findUserByEmailAndPhone(user.getEmail(), user.getPhone());
+    public String login(@ModelAttribute User user, Model model, HttpSession httpSession) {
+        Optional<User> userDb = userService.findUserByEmailAndPhone(user.getEmail(), user.getPhone());
         if (userDb.isEmpty()) {
-            return "redirect:/loginPage?fail=true";
+            model.addAttribute("fail", true);
+            model.addAttribute("message", "Неверный номер телефона или почта!");
+            return "login";
         }
-        HttpSession session = req.getSession();
-        session.setAttribute("user", userDb.get());
+        httpSession.setAttribute("user", userDb.get());
         return "redirect:/index";
     }
 
     @GetMapping("logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
         return "redirect:/loginPage";
     }
 }

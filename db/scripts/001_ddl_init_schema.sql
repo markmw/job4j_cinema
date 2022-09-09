@@ -7,13 +7,14 @@ CREATE TABLE users (
 
 CREATE TABLE sessions (
   id SERIAL PRIMARY KEY,
-  name text
+  name VARCHAR UNIQUE
 );
 
 CREATE TABLE ticket (
     id SERIAL PRIMARY KEY,
     session_id INT NOT NULL REFERENCES sessions(id),
-    pos_row INT NOT NULL UNIQUE,
-    cell INT NOT NULL UNIQUE,
-    user_id INT NOT NULL REFERENCES users(id)
+    user_id INT NOT NULL REFERENCES users(id),
+    pos_row INT NOT NULL,
+    cell INT NOT NULL,
+    CONSTRAINT ticket_unique UNIQUE (session_id, pos_row, cell)
 );

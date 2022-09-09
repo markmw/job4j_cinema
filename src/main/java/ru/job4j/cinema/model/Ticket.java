@@ -4,20 +4,33 @@ import java.util.Objects;
 
 public class Ticket {
     private int id;
-    private int session_id;
-    private int pos_row;
+    private Session session;
+    private User user;
+    private int row;
     private int cell;
-    private int user_id;
 
     public Ticket() {
     }
 
-    public Ticket(int id, int session_id, int pos_row, int cell, int user_id) {
+    public Ticket(int id, int row, int cell) {
         this.id = id;
-        this.session_id = session_id;
-        this.pos_row = pos_row;
+        this.row = row;
         this.cell = cell;
-        this.user_id = user_id;
+    }
+
+    public Ticket(Session session, User user, int row, int cell) {
+        this.session = session;
+        this.user = user;
+        this.row = row;
+        this.cell = cell;
+    }
+
+    public Ticket(int id, Session session, User user, int row, int cell) {
+        this.id = id;
+        this.session = session;
+        this.user = user;
+        this.row = row;
+        this.cell = cell;
     }
 
     public int getId() {
@@ -28,20 +41,28 @@ public class Ticket {
         this.id = id;
     }
 
-    public int getSession_id() {
-        return session_id;
+    public Session getSession() {
+        return session;
     }
 
-    public void setSession_id(int session_id) {
-        this.session_id = session_id;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    public int getPos_row() {
-        return pos_row;
+    public User getUser() {
+        return user;
     }
 
-    public void setPos_row(int pos_row) {
-        this.pos_row = pos_row;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
     }
 
     public int getCell() {
@@ -50,25 +71,6 @@ public class Ticket {
 
     public void setCell(int cell) {
         this.cell = cell;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket{"
-                + "id=" + id
-                + ", session_id=" + session_id
-                + ", pos_row=" + pos_row
-                + ", cell=" + cell
-                + ", user_id=" + user_id
-                + '}';
     }
 
     @Override
@@ -86,5 +88,16 @@ public class Ticket {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{"
+                + "id=" + id
+                + ", session=" + session
+                + ", user=" + user
+                + ", row=" + row
+                + ", cell=" + cell
+                + '}';
     }
 }

@@ -10,25 +10,19 @@ import java.io.IOException;
 @Component
 public class AuthFilter implements Filter {
     @Override
-    public void doFilter(
-            ServletRequest request,
-            ServletResponse response,
-            FilterChain chain
-    ) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        HttpServletResponse res = (HttpServletResponse) servletResponse;
         String uri = req.getRequestURI();
-        if (uri.endsWith("loginPage")
-                || uri.endsWith("login")
-                || uri.endsWith("formAddUser")
-                || uri.endsWith("/registration")) {
-            chain.doFilter(req, res);
-            return;
-        }
-        if (req.getSession().getAttribute("user") == null) {
+        if (uri.endsWith("getTicket") && req.getSession().getAttribute("user") == null) {
+            req.getSession().setAttribute("mustLoginForTakeTicket", true);
             res.sendRedirect(req.getContextPath() + "/loginPage");
             return;
         }
-        chain.doFilter(req, res);
+        if (uri.endsWith("getTicket") && req.getParameter("place") == null) {
+            req.getSession().setAttribute("not_specify_place", true);
+        }
+        filterChain.doFilter(req, res);
     }
 }

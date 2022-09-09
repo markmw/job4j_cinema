@@ -11,6 +11,16 @@ public class User {
     public User() {
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
+    public User(String username, String email, String phone) {
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public User(int id, String username, String email, String phone) {
         this.id = id;
         this.username = username;
@@ -69,11 +79,11 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return id == user.id;
+        return Objects.equals(email, user.email) && Objects.equals(phone, user.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(email, phone);
     }
 }
