@@ -25,16 +25,16 @@ Cайт по покупки билетов в кино.
 3. Запуск проекта - "java -jar job4j_cinema-1.0.jar"
 
 Главная страница:
-![](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/main page.png)
+![Settings Windows](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/main page.png)
 
 Страница регистрации:
-![](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/registration page.png)
+![Settings Windows](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/registration page.png)
 
 Страница авторизации:
-![](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/sign in page.png)
+![Settings Windows](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/sign in page.png)
 
 Результаты:
 Успешная покупка билета:
-![](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/success page.png)
+![Settings Windows](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/success page.png)
 Неуспешная покупка:
-![](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/fail page.png)
+![Settings Windows](https://raw.github.com/markmw/job4j_cinema/master/src/main/resources/images/fail page.png)
