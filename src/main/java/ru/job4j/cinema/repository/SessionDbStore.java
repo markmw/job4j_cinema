@@ -10,6 +10,7 @@ import ru.job4j.cinema.model.Session;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,8 @@ public class SessionDbStore {
         this.pool = pool;
     }
 
-    public Session addSession(Session session) {
+    public Optional<Session> addSession(Session session) {
+        Optional<Session> result = Optional.empty();
         try (PreparedStatement st = pool.getConnection().prepareStatement(
                 INSERT_SESSION, PreparedStatement.RETURN_GENERATED_KEYS)) {
             st.setString(1, session.getName());
@@ -36,12 +38,15 @@ public class SessionDbStore {
             try (ResultSet res = st.getGeneratedKeys()) {
                 if (res.next()) {
                     session.setId(res.getInt("id"));
+                    result = Optional.of(session);
                 }
             }
+        } catch (SQLIntegrityConstraintViolationException exc) {
+            return Optional.empty();
         } catch (Exception exc) {
             LOG.error("Exception: ", exc);
         }
-        return session;
+        return result;
     }
 
     public Optional<Session> findById(int id) {
