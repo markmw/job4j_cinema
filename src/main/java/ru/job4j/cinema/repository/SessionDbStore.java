@@ -18,7 +18,7 @@ import java.util.Optional;
 public class SessionDbStore {
     private static final Logger LOG = LoggerFactory.getLogger(SessionDbStore.class);
     private static final String INSERT_SESSION =
-            "INSERT INTO sessions(name) VALUES (?) ON CONFLICT DO NOTHING";
+            "INSERT INTO sessions(name) VALUES (?)";
     private static final String SELECT_SESSION_BY_ID = "SELECT * FROM sessions WHERE id = ?";
     private static final String UPDATE_SESSION = "UPDATE sessions SET name = ? WHERE id = ?";
     private static final String SELECT_ALL_SESSIONS = "SELECT * FROM sessions";

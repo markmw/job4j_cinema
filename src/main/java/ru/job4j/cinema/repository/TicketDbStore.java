@@ -20,8 +20,7 @@ import java.util.Optional;
 public class TicketDbStore {
     private static final Logger LOG = LoggerFactory.getLogger(TicketDbStore.class);
     private static final String INSERT_TICKET =
-            "INSERT INTO ticket(session_id, user_id, pos_row, cell) VALUES (?, ?, ?, ?)"
-                    + "ON CONFLICT DO NOTHING";
+            "INSERT INTO ticket(session_id, user_id, pos_row, cell) VALUES (?, ?, ?, ?)";
     private static final String SELECT_TICKET_BY_ID = "SELECT t.id, t.pos_row, t.cell,"
             + " t.session_id, s.name, t.user_id, u.username, u.email, u.phone "
             + "FROM ticket AS t "

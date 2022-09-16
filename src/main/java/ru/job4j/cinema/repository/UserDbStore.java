@@ -18,7 +18,7 @@ import java.util.Optional;
 public class UserDbStore {
     private static final Logger LOG = LoggerFactory.getLogger(UserDbStore.class);
     private static final String SELECT_USER = "INSERT INTO users(username, email, phone)"
-            + " VALUES (?, ?, ?) ON CONFLICT DO NOTHING";
+            + " VALUES (?, ?, ?)";
     private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
     private static final String UPDATE_USER =
             "UPDATE users SET username = ?, email = ?, phone = ? WHERE id = ?";
