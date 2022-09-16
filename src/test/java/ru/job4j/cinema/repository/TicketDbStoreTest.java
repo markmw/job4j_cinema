@@ -29,8 +29,7 @@ class TicketDbStoreTest {
             st.execute();
         }
         try (PreparedStatement st = pool.getConnection().prepareStatement(
-                "DELETE FROM users"
-        )) {
+                "DELETE FROM users")) {
             st.execute();
         }
         try (PreparedStatement st = pool.getConnection().prepareStatement(
