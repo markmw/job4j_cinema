@@ -3,8 +3,11 @@ package ru.job4j.cinema.controller;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.job4j.cinema.dto.PlaceDTO;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
@@ -31,10 +34,29 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @PostMapping("/getTicket")
-    public String getTicket(@RequestParam(name = "sess_id", required = false, defaultValue = "0") int sessionId,
-                            HttpSession httpSession, Model model,
-                            @RequestParam(value = "place", required = false) List<Integer> placesId) {
+    @GetMapping("/index")
+    public String index(Model model, HttpSession httpSession) {
+        model.addAttribute("sessions", sessionService.findAll());
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setUsername("Гость");
+        }
+        model.addAttribute("user", user);
+        return "index";
+    }
+
+    @GetMapping("/indexWithPlaces/{filmId}")
+    public String indexWithPlace(@PathVariable("filmId") int id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("sess_id", id);
+        redirectAttributes.addFlashAttribute("freePlaces", sessionService.getFreePlaces(id));
+        return "redirect:/index";
+    }
+
+    @PostMapping("/save")
+    public String save(@RequestParam(name = "sess_id", required = false, defaultValue = "0") int sessionId,
+                       HttpSession httpSession, Model model,
+                       @RequestParam(value = "place", required = false) List<Integer> placesId) {
         User user = userService.findById(((User) httpSession.getAttribute("user")).getId()).get();
         Session session = sessionService.findById(sessionId).get();
         List<Ticket> tickets = new ArrayList<>();

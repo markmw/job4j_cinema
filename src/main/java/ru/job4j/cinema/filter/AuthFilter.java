@@ -15,12 +15,12 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         String uri = req.getRequestURI();
-        if (uri.endsWith("getTicket") && req.getSession().getAttribute("user") == null) {
+        if (uri.endsWith("save") && req.getSession().getAttribute("user") == null) {
             req.getSession().setAttribute("mustLoginForTakeTicket", true);
             res.sendRedirect(req.getContextPath() + "/loginPage");
             return;
         }
-        if (uri.endsWith("getTicket") && req.getParameter("place") == null) {
+        if (uri.endsWith("save") && req.getParameter("place") == null) {
             req.getSession().setAttribute("not_specify_place", true);
         }
         filterChain.doFilter(req, res);

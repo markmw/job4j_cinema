@@ -92,7 +92,7 @@
                             <td style="padding-left: 50px">6</td>
                         </tr>
                         </thead>
-                        <form method="POST" th:action="@{/getTicket}">
+                        <form method="POST" th:action="@{/save}">
                             <input type="hidden" name="sess_id" th:value="${sess_id}">
                             <tbody th:if="${freePlaces} != null">
                             <tr>
