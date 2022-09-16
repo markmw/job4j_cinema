@@ -1,2 +1,2 @@
 INSERT INTO sessions (name)
-VALUES ('Taxi'), ('Blade'), ('Spider-Man'), ('Venom');
+VALUES ('Maxi'), ('Super-Man'), ('Carnage'), ('Sonic');
