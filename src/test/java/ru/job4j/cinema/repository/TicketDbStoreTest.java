@@ -4,7 +4,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.job4j.Main;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
@@ -19,7 +18,7 @@ class TicketDbStoreTest {
 
     @BeforeAll
     public static void loadPool() {
-        pool = new Main().loadPool();
+        pool = new TestConnectionPool();
     }
 
     @AfterEach
